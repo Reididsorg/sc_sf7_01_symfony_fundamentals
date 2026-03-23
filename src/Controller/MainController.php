@@ -13,14 +13,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function homepage(StarshipRepository $starshipRepository, HttpClientInterface $client, CacheInterface $cache): Response
+    public function homepage(StarshipRepository $starshipRepository, HttpClientInterface $client, CacheInterface $issLocationPool): Response
     {
         $ships = $starshipRepository->findAll();
         $myShip = $ships[array_rand($ships)];
 
-        $issData = $cache->get('iss_location_data', function (ItemInterface $item) use ($client): array {
-            // Le cache 'iss_location_data' situé dans var/cache/dev/pools/app expire après 200 secondes.
-            $item->expiresAfter(200);
+        $issData = $issLocationPool->get('iss_location_data', function (ItemInterface $item) use ($client): array {
+            // Le cache 'iss_location_data' situé par défaut dans var/cache/dev/pools/app expire après 200 secondes.
+//            $item->expiresAfter(200);
 
             // La requete http n'est effectuée que si le cache ('iss_location_data' n'existe pas ou est expiré.
             $response = $client->request('GET', 'https://api.wheretheiss.at/v1/satellites/25544');
