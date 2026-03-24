@@ -15,18 +15,18 @@ class StarshipRepository extends AbstractController
 {
     public function __construct(
         private LoggerInterface $logger,
-//        #[Autowire(param: 'kernel.project_dir')]
-//        private $projectDir,
+        #[Autowire(param: 'kernel.project_dir')] // Passage de nom de paramètre. Peut aussi s'écrire : #[Autowire('%kernel.project_dir%')]
+        private $projectDir,
 //        #[Autowire(param: 'iss_location_cache_ttl')]
         private readonly int $issLocationCacheTtl,
-        #[Autowire(service: 'twig.command.debug')]
+        #[Autowire('@twig.command.debug')] // Passage de nom de service. Peut aussi s'écrire : #[Autowire('@twig.command.debug')]
         private readonly DebugCommand $twigDebugCommand,
     ) {
     }
 
     public function findAll(): array
     {
-//        dump($this->projectDir);
+        dump($this->projectDir);
 
         dump($this->issLocationCacheTtl); // Affiche : 10
 
