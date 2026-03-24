@@ -19,7 +19,7 @@ class StarshipRepository extends AbstractController
         private $projectDir,
 //        #[Autowire(param: 'iss_location_cache_ttl')]
         private readonly int $issLocationCacheTtl,
-        #[Autowire('@twig.command.debug')] // Passage de nom de service. Peut aussi s'écrire : #[Autowire('@twig.command.debug')]
+        #[Autowire(service: 'twig.command.debug')] // Passage de nom de service. Peut aussi s'écrire : #[Autowire('@twig.command.debug')]
         private readonly DebugCommand $twigDebugCommand,
     ) {
     }
