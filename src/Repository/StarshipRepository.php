@@ -5,7 +5,10 @@ namespace App\Repository;
 use App\Model\Starship;
 use App\Model\StarshipStatusEnum;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class StarshipRepository extends AbstractController
@@ -16,6 +19,8 @@ class StarshipRepository extends AbstractController
 //        private $projectDir,
 //        #[Autowire(param: 'iss_location_cache_ttl')]
         private readonly int $issLocationCacheTtl,
+        #[Autowire(service: 'twig.command.debug')]
+        private readonly DebugCommand $twigDebugCommand,
     ) {
     }
 
@@ -24,6 +29,11 @@ class StarshipRepository extends AbstractController
 //        dump($this->projectDir);
 
         dump($this->issLocationCacheTtl); // Affiche : 10
+
+        dump($this->twigDebugCommand);
+        $output = new BufferedOutput();
+        $this->twigDebugCommand->run(new ArrayInput([]), $output);
+        dump($output);
 
         $this->logger->info('Starship collection retrieved');
 
