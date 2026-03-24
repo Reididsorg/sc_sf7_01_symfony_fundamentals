@@ -18,4 +18,4 @@ framework:
         pools:
             #my.dedicated.cache: null
             iss_location_pool:
-                default_lifetime: 10 # Durée de vie en secondes du cache
+                default_lifetime: '%iss_location_cache_ttl%' # Durée de vie en secondes du cache
